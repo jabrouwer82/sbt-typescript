@@ -1,20 +1,14 @@
 sbtPlugin := true
 organization := "name.de-vries"
 name := "sbt-typescript"
-version := "2.6.2"
+version := "3.1.6-mk"
 
 homepage := Some(url("https://github.com/joost-de-vries/sbt-typescript"))
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := (CrossVersion partialVersion sbtCrossVersion.value match {
-  case Some((0, 13)) => "2.10.6"
-  case Some((1, _))  => "2.12.3"
-  case _             => sys error s"Unhandled sbt version ${sbtCrossVersion.value}"
-})
+scalaVersion := "2.10.6"
 
-crossSbtVersions := Seq("0.13.16", "1.0.1")
-
-val sbtCrossVersion = sbtVersion in pluginCrossBuild
+sbtVersion := "0.13.16"
 
 updateOptions := updateOptions.value.withCachedResolution(cachedResoluton = true)
 
@@ -32,7 +26,7 @@ scalacOptions ++= Seq(
 libraryDependencies ++= Seq(
 
   // js dependencies
-  "org.webjars.npm" % "typescript" % "2.6.1",
+  "org.webjars.npm" % "typescript" % "3.1.6",
   "org.webjars.npm" % "minimatch" % "3.0.0",
   "org.webjars.npm" % "fs-extra" % "0.26.6",
   "org.webjars.npm" % "es6-shim" % "0.35.1"
@@ -45,8 +39,10 @@ dependencyOverrides ++= Seq(
   "org.webjars" % "npm" % "3.9.3"
 )
 
+resolvers += "minutekey" at "http://nexus.minutekey.com:8081/repository/public/"
+
 resolvers ++= Seq(
-  Resolver.bintrayRepo("webjars","maven"),
+  /* Resolver.bintrayRepo("webjars","maven"), */
   Resolver.typesafeRepo("releases"),
   Resolver.sbtPluginRepo("releases"),
   Resolver.sonatypeRepo("releases"),
@@ -56,10 +52,12 @@ resolvers ++= Seq(
 addSbtPlugin("com.typesafe.sbt" % "sbt-js-engine" % "1.2.2")
 addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.3")
 
-publishMavenStyle := false
-bintrayRepository in bintray := "sbt-plugins"
-bintrayOrganization in bintray := None
-bintrayVcsUrl := Some("git@github.com:joost-de-vries/sbt-typescript.git")
+/* publishMavenStyle := false */
+//bintrayRepository in bintray := "sbt-plugins"
+//bintrayOrganization in bintray := None
+//bintrayVcsUrl := Some("git@github.com:joost-de-vries/sbt-typescript.git")
 
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+publishTo := Some("releases" at "http://nexus.minutekey.com:8081/repository/releases/")
 scriptedLaunchOpts += s"-Dproject.version=${version.value}"
 scriptedBufferLog := false
