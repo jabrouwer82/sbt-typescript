@@ -1,14 +1,14 @@
 sbtPlugin := true
 organization := "name.de-vries"
 name := "sbt-typescript"
-version := "3.1.6-mk"
+version := "3.5.2-mk"
 
 homepage := Some(url("https://github.com/joost-de-vries/sbt-typescript"))
 licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.12.8"
 
-sbtVersion := "0.13.16"
+sbtVersion := "1.2.8"
 
 updateOptions := updateOptions.value.withCachedResolution(cachedResoluton = true)
 
@@ -26,7 +26,7 @@ scalacOptions ++= Seq(
 libraryDependencies ++= Seq(
 
   // js dependencies
-  "org.webjars.npm" % "typescript" % "3.1.6",
+  "org.webjars.npm" % "typescript" % "3.5.2",
   "org.webjars.npm" % "minimatch" % "3.0.0",
   "org.webjars.npm" % "fs-extra" % "0.26.6",
   "org.webjars.npm" % "es6-shim" % "0.35.1"
